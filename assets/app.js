@@ -11,6 +11,15 @@ import $ from 'jquery';
 import 'simplebar';
 import 'perfect-scrollbar';
 import 'metismenu';
+// import 'tty';
+// import 'stream';
 // import 'pace';
 import 'bootstrap';
 import 'jquery-validation';
+import 'datatables.net-dt';
+// import 'bootstrap-datepicker';
+import 'select2';
+
+$(document).ready(function() {
+    $('#example').DataTable();
+} );

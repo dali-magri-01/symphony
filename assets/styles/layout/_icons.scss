@@ -5,8 +5,8 @@
 	font-family: boxicons;
 	font-weight: 400;
 	font-style: normal;
-	//src: url(../../../public/build/fonts/boxicons.eot);
-	//src: url(../../../public/build/fonts/boxicons.eot) format('embedded-opentype'), url(../../../public/build/fonts/boxicons.woff2) format('woff2'), url(../../../public/build/fonts/boxicons.woff) format('woff'), url(../../../public/build/fonts/boxicons.ttf) format('truetype'), url(../../../public/build/fonts/boxicons.svg?#boxicons) format('svg')
+	src: url(../../fonts/boxicons.eot);
+	src: url(../../fonts/boxicons.eot) format('embedded-opentype'), url(../../fonts/boxicons.woff2) format('woff2'), url(../../fonts/boxicons.woff) format('woff'), url(../../fonts/boxicons.ttf) format('truetype'), url(../../fonts/boxicons.svg?#boxicons) format('svg')
 }
 
 .bx {
@@ -6424,8 +6424,8 @@
 
 @font-face {
 	font-family: LineIcons;
-	//src: url(../fonts/LineIcons.eot);
-	//src: url(../fonts/LineIcons.eot) format('embedded-opentype'), url(../fonts/LineIcons.woff2) format('woff2'), url(../fonts/LineIcons.woff) format('woff'), url(../fonts/LineIcons.ttf) format('truetype'), url(../fonts/LineIcons.svg) format('svg');
+	src: url(../../fonts/LineIcons.eot);
+	src: url(../../fonts/LineIcons.eot) format('embedded-opentype'), url(../../fonts/LineIcons.woff2) format('woff2'), url(../../fonts/LineIcons.woff) format('woff'), url(../../fonts/LineIcons.ttf) format('truetype'), url(../../fonts/LineIcons.svg) format('svg');
 	font-weight: 400;
 	font-style: normal
 }

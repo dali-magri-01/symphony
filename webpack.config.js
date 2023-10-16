@@ -28,6 +28,7 @@ Encore
     .addEntry('index4', './assets/js/index4.js')
     .addEntry('widgets', './assets/js/widgets.js')
     .addEntry('validation', './assets/js/plugins/validation-script.js')
+    .addEntry('datatable', './assets/js/datatable/datatable.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
