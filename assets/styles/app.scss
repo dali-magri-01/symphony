@@ -7,10 +7,18 @@
 @import './layout/header-colors';
 @import './layout/icons';
 @import './layout/semi-dark';
+@import './plugins/_themify-icons';
 @import '~simplebar';
 @import '~perfect-scrollbar';
 @import '~metismenu';
+//@import '~tty';
+//@import '~stream';
 //@import '~pace';
+@import '~datatables.net-dt';
+//@import '~bootstrap-datepicker';
+@import '~select2';
+//@import '~themify-icons';
+@import '~flag-icons';
 
 body {
 
