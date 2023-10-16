@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une Société</h1>
+
+    <form method="post">
+
+
+
+        <div class="page-content">
+
+            <h6 class="text-uppercase">Entrer Votre societe</h6>
+            <hr>
+            <div id="stepper1" class="bs-stepper">
+                <div class="card">
+
+
+                    <div class="card-body">
+
+                        <div class="bs-stepper-content">
+                            <form onSubmit="return false">
+                                <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
+                                    <h5 class="mb-1"></h5>
+                                    <p class="mb-4"> </p>
+                                    {{ form_start(form) }}
+                                    <div class="row g-3">
+                                        <div class="col-12 col-lg-10">
+                                            {{ form_label(form.libelle) }}
+                                            {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-12 col-lg-2">
+                                            <br>
+                                            <button class="btn btn-success px-4">Enregistrer</button>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            {{ form_label(form.matriculeFiscale) }}
+                                            {{ form_widget(form.matriculeFiscale, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            {{ form_label(form.rue) }}
+                                            {{ form_widget(form.rue, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            {{ form_label(form.ville) }}
+                                            {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            {{ form_label(form.pays) }}
+                                            {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            {{ form_label(form.rc) }}
+                                            {{ form_widget(form.rc, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            {{ form_label(form.actif) }}
+                                            {{ form_widget(form.actif, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+
+                                    </div><!---end row-->
+                                    {{ form_end(form) }}
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--end stepper one-->
+
+        </div></form>
+
+
+    </form>
+{% endblock %}
