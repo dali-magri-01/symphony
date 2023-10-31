@@ -41,13 +41,17 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // TODO : code review
+            $sql = "ALTER session SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIME_FORMAT = 'HH24:MI:SS' NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_TZ_FORMAT = 'YYYY-MM-DD HH24:MI:SS TZH:TZM' NLS_TIME_TZ_FORMAT = 'HH24:MI:SS TZH:TZM'";
+            $entityManager->getConnection()->executeQuery($sql);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('mailer@pgsystunisie.com.tn', 'Mail Bot'))
+                    ->from(new Address('mailer@logicely.com', 'Mail Bot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
@@ -79,6 +83,12 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('index_home');
+    }
+
+    #[Route('/login-failure', name: 'login_failure')]
+    public function loginFailure(): Response
+    {
+        return $this->render('error/error-404.html.twig');
     }
 }
