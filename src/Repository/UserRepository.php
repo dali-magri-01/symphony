@@ -71,7 +71,8 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
         return $entityManager->createQuery(
             'SELECT u
                 FROM App\Entity\User u
-                WHERE u.email = :query'
+                WHERE u.email = :query
+                AND u.isVerified  = true'
         )
             ->setParameter('query', $identifier)
             ->getOneOrNullResult();

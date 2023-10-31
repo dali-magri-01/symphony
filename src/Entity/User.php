@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     /**
@@ -32,6 +32,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    /**
+     * User constructor.
+     * @param array $roles
+     */
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+    }
+
 
     public function getId(): ?int
     {
