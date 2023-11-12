@@ -3,6 +3,7 @@
 namespace App\Entity;
 use App\Trait\TimeStampTrait;
 use App\Repository\SocieteRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SocieteRepository::class)]
@@ -26,14 +27,30 @@ class Societe
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $pays = null;
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $rc = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $imageblob = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $CodePostal = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $Filename = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $images = null;
+
+    #[ORM\ManyToOne(inversedBy: 'societes')]
+    private ?Pays $pays_id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'societes')]
+    private ?Devise $Devise_id = null;
 
 
     public function getId(): ?int
@@ -89,17 +106,7 @@ class Societe
         return $this;
     }
 
-    public function getPays(): ?string
-    {
-        return $this->pays;
-    }
 
-    public function setPays(?string $pays): static
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
 
     public function getRc(): ?string
     {
@@ -121,6 +128,78 @@ class Societe
     public function setActif(?bool $actif): static
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getImageblob()
+    {
+        return $this->imageblob;
+    }
+
+    public function setImageblob($imageblob): static
+    {
+        $this->imageblob = $imageblob;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->CodePostal;
+    }
+
+    public function setCodePostal(?int $CodePostal): static
+    {
+        $this->CodePostal = $CodePostal;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->Filename;
+    }
+
+    public function setFilename(?string $Filename): static
+    {
+        $this->Filename = $Filename;
+
+        return $this;
+    }
+
+    public function getImages(): ?string
+    {
+        return $this->images;
+    }
+
+    public function setImages(?string $images): static
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    public function getPaysId(): ?Pays
+    {
+        return $this->pays_id;
+    }
+
+    public function setPaysId(?Pays $pays_id): static
+    {
+        $this->pays_id = $pays_id;
+
+        return $this;
+    }
+
+    public function getDeviseId(): ?Devise
+    {
+        return $this->Devise_id;
+    }
+
+    public function setDeviseId(?Devise $Devise_id): static
+    {
+        $this->Devise_id = $Devise_id;
 
         return $this;
     }
