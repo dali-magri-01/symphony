@@ -2,7 +2,12 @@
 {% block title %}Index{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-
+    {{ encore_entry_link_tags('select2') }}
+    <style>
+        .form-select.select2 {
+            border: 0;
+        }
+    </style>
 {#        {{ encore_entry_script_tags('') }}#}
 {% endblock %}
 
@@ -731,6 +736,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('select2') }}
+
 
 {#    {{ encore_entry_script_tags('') }}#}
 {#    <script>#}
