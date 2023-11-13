@@ -43,7 +43,7 @@ class SocieteType extends AbstractType
                 'label' => 'Ville',
                 'required' => false,
             ])
-            ->add('pays_id', EntityType::class, [
+            ->add('pays', EntityType::class, [
                 'class' => 'App\Entity\Pays',
                 'choice_label' => 'nom_fr_fr',
                 'label' => ' Pays',
@@ -57,7 +57,7 @@ class SocieteType extends AbstractType
                 },
                 'placeholder' => 'Choisissez un pays',
             ])
-            ->add('Devise_id', EntityType::class, [
+            ->add('devise', EntityType::class, [
                 'class' => 'App\Entity\Devise',
                 'choice_label' => 'code',
                 'label' => ' Devise',
@@ -76,7 +76,7 @@ class SocieteType extends AbstractType
                 'label' => 'RC',
                 'required' => false,
             ])
-            ->add('CodePostal',null, [
+            ->add('codePostal',null, [
                 'label' => 'Code Postal',
                 'required' => false,
             ])
@@ -84,7 +84,7 @@ class SocieteType extends AbstractType
                 'label' => 'Actif',
                 'required' => false,
             ])
-            ->add('Filename', FileType::class, [
+            ->add('logoFilename', FileType::class, [
                 'label' => 'Logo',
                 'required' => false,
                 'constraints' => [

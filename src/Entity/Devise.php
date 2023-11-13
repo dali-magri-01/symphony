@@ -6,10 +6,13 @@ use App\Repository\DeviseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: DeviseRepository::class)]
 class Devise
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,7 +24,7 @@ class Devise
     #[ORM\Column(length: 2, nullable: true)]
     private ?string $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'Devise_id', targetEntity: Societe::class)]
+    #[ORM\OneToMany(mappedBy: 'devise', targetEntity: Societe::class)]
     private Collection $societes;
 
     public function __construct()
@@ -70,7 +73,7 @@ class Devise
     {
         if (!$this->societes->contains($societe)) {
             $this->societes->add($societe);
-            $societe->setDeviseId($this);
+            $societe->setDevise($this);
         }
 
         return $this;
@@ -80,8 +83,8 @@ class Devise
     {
         if ($this->societes->removeElement($societe)) {
             // set the owning side to null (unless already changed)
-            if ($societe->getDeviseId() === $this) {
-                $societe->setDeviseId(null);
+            if ($societe->getDevise() === $this) {
+                $societe->setDevise(null);
             }
         }
 

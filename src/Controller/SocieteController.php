@@ -53,7 +53,7 @@ class SocieteController extends AbstractController
             // Redirigez l'utilisateur vers une autre page ou affichez un message de succès.
             return $this->redirectToRoute('societe_list');
         }
-        $filename = $societe->getFilename();
+        $filename = $societe->getLogoFilename();
         $filePath = '/uploads/Societe/'.$filename;
         return $this->render('societe/societe-add.html.twig', [
             'form' => $form->createView(),
@@ -108,7 +108,7 @@ class SocieteController extends AbstractController
                         $newFilename
                     );
 
-                    $societe->setFilename($newFilename);
+                    $societe->setLogoFilename($newFilename);
                 } catch (FileException $e) {
                     // Handle the exception if needed
                 }
@@ -126,8 +126,8 @@ class SocieteController extends AbstractController
         return $this->render('societe/societe-add.html.twig', [
             'form' => $form->createView(),
             'societe' => $societe,
-            'fileExists' => $societe->getFilename(),
-            'filePath' => '/uploads/Societe/' . $societe->getFilename(),
+            'fileExists' => $societe->getLogoFilename(),
+            'filePath' => '/uploads/Societe/' . $societe->getLogoFilename(),
         ]);
     }
 }
