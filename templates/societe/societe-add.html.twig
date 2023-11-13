@@ -72,13 +72,13 @@
                                                             {{ form_widget(form.rc, {'attr': {'class': 'form-control'}}) }}
                                                          </div>
                                                             <div class="col-12 col-lg-6">
-                                                                {{ form_label(form.Devise_id) }}
-                                                                {{ form_widget(form.Devise_id) }}
+                                                                {{ form_label(form.devise) }}
+                                                                {{ form_widget(form.devise) }}
                                                             </div>
 
 
                                                         <div class="col-12 col-lg-8">
-                                                            {{ form_row(form.Filename, {'attr': {'class': 'form-control'}}) }}
+                                                            {{ form_row(form.logoFilename, {'attr': {'class': 'form-control'}}) }}
                                                         </div>
                                                             <div class="col-12 col-lg-4"><br>
                                                                 <div class="form-check form-switch form-check-danger">&nbsp;&nbsp;&nbsp;
@@ -106,8 +106,8 @@
                                                     <p class="mb-4">Adresse: </p>
                                                      <div class="row g-3">
                                                          <div class="col-12 col-lg-6">
-                                                             {{ form_label(form.pays_id) }}
-                                                             {{ form_widget(form.pays_id) }}
+                                                             {{ form_label(form.pays) }}
+                                                             {{ form_widget(form.pays) }}
                                                          </div>
                                                         <div class="col-12 col-lg-6">
                                                         {{ form_label(form.rue) }}
@@ -119,8 +119,8 @@
                                                     </div>
 
                                                      <div class="col-12 col-lg-6">
-                                                         {{ form_label(form.CodePostal) }}
-                                                         {{ form_widget(form.CodePostal, {'attr': {'class': 'form-control'}}) }}
+                                                         {{ form_label(form.codePostal) }}
+                                                         {{ form_widget(form.codePostal, {'attr': {'class': 'form-control'}}) }}
                                                      </div>
                                                 </div>
                                               </div>

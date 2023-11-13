@@ -6,10 +6,13 @@ use App\Repository\PaysRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: PaysRepository::class)]
 class Pays
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -30,7 +33,7 @@ class Pays
     #[ORM\Column(length: 100)]
     private ?string $nom_fr_fr = null;
 
-    #[ORM\OneToMany(mappedBy: 'pays_id', targetEntity: Societe::class)]
+    #[ORM\OneToMany(mappedBy: 'pays', targetEntity: Societe::class)]
     private Collection $societes;
 
     public function __construct()
@@ -115,7 +118,7 @@ class Pays
     {
         if (!$this->societes->contains($societe)) {
             $this->societes->add($societe);
-            $societe->setPaysId($this);
+            $societe->setPays($this);
         }
 
         return $this;
@@ -125,8 +128,8 @@ class Pays
     {
         if ($this->societes->removeElement($societe)) {
             // set the owning side to null (unless already changed)
-            if ($societe->getPaysId() === $this) {
-                $societe->setPaysId(null);
+            if ($societe->getPays() === $this) {
+                $societe->setPays(null);
             }
         }
 

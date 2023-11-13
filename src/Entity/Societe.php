@@ -16,18 +16,17 @@ class Societe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 200, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $libelle = null;
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $matriculeFiscale = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $rue = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
-
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $rc = null;
@@ -35,23 +34,17 @@ class Societe
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $imageblob = null;
-
     #[ORM\Column(nullable: true)]
-    private ?int $CodePostal = null;
+    private ?int $codePostal = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $Filename = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $images = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logoFilename = null;
 
     #[ORM\ManyToOne(inversedBy: 'societes')]
-    private ?Pays $pays_id = null;
+    private ?Pays $pays = null;
 
     #[ORM\ManyToOne(inversedBy: 'societes')]
-    private ?Devise $Devise_id = null;
+    private ?Devise $devise = null;
 
 
     public function getId(): ?int
@@ -107,8 +100,6 @@ class Societe
         return $this;
     }
 
-
-
     public function getRc(): ?string
     {
         return $this->rc;
@@ -133,77 +124,67 @@ class Societe
         return $this;
     }
 
-    public function getImageblob()
-    {
-        return $this->imageblob;
-    }
-
-    public function setImageblob($imageblob): static
-    {
-        $this->imageblob = $imageblob;
-
-        return $this;
-    }
-
+    /**
+     * @return int|null
+     */
     public function getCodePostal(): ?int
     {
-        return $this->CodePostal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(?int $CodePostal): static
+    /**
+     * @param int|null $codePostal
+     */
+    public function setCodePostal(?int $codePostal): void
     {
-        $this->CodePostal = $CodePostal;
-
-        return $this;
+        $this->codePostal = $codePostal;
     }
 
-    public function getFilename(): ?string
+    /**
+     * @return string|null
+     */
+    public function getLogoFilename(): ?string
     {
-        return $this->Filename;
+        return $this->logoFilename;
     }
 
-    public function setFilename(?string $Filename): static
+    /**
+     * @param string|null $logoFilename
+     */
+    public function setLogoFilename(?string $logoFilename): void
     {
-        $this->Filename = $Filename;
-
-        return $this;
+        $this->logoFilename = $logoFilename;
     }
 
-    public function getImages(): ?string
+    /**
+     * @return Pays|null
+     */
+    public function getPays(): ?Pays
     {
-        return $this->images;
+        return $this->pays;
     }
 
-    public function setImages(?string $images): static
+    /**
+     * @param Pays|null $pays
+     */
+    public function setPays(?Pays $pays): void
     {
-        $this->images = $images;
-
-        return $this;
+        $this->pays = $pays;
     }
 
-    public function getPaysId(): ?Pays
+    /**
+     * @return Devise|null
+     */
+    public function getDevise(): ?Devise
     {
-        return $this->pays_id;
+        return $this->devise;
     }
 
-    public function setPaysId(?Pays $pays_id): static
+    /**
+     * @param Devise|null $devise
+     */
+    public function setDevise(?Devise $devise): void
     {
-        $this->pays_id = $pays_id;
-
-        return $this;
+        $this->devise = $devise;
     }
-
-    public function getDeviseId(): ?Devise
-    {
-        return $this->Devise_id;
-    }
-
-    public function setDeviseId(?Devise $Devise_id): static
-    {
-        $this->Devise_id = $Devise_id;
-
-        return $this;
-    }
-
-
 }
