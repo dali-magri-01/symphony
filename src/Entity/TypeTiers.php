@@ -14,10 +14,10 @@ class TypeTiers
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'typeTiers')]
-    #[ORM\JoinColumn(nullable: false, unique: true)]
+    #[ORM\JoinColumn(unique: true, nullable: false)]
     private ?Societe $societe = null;
 
-    #[ORM\Column(length: 250, nullable: true, unique:true)]
+    #[ORM\Column(length: 250, unique: true, nullable: true)]
     private ?string $tt_code = null;
 
     #[ORM\Column(length: 250, nullable: false)]
