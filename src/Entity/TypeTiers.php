@@ -14,7 +14,7 @@ class TypeTiers
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'typeTiers')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, unique: true)]
     private ?Societe $societe = null;
 
     #[ORM\Column(length: 250, nullable: true, unique:true)]
