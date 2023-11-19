@@ -37,7 +37,6 @@ final class Version20231116165429 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_184BBC55F9EAD30F ON TYPE_TIERS (tt_code)');
 
 
-
     }
 
     public function down(Schema $schema): void
@@ -56,6 +55,11 @@ final class Version20231116165429 extends AbstractMigration
         $this->addSql('ALTER TABLE pays ADD (CREATED_AT TIMESTAMP(0) NOT NULL, UPDATED_AT TIMESTAMP(0) NOT NULL)');
         $this->addSql('ALTER TABLE menu DROP CONSTRAINT FK_7D053A93727ACA70');
         $this->addSql('DROP INDEX UNIQ_184BBC55F9EAD30F');
+        $this->addSql('DROP INDEX UNIQ_184BBC55FCF77503');
+        $this->addSql('CREATE UNIQUE INDEX uniq_184bbc55e8035551 ON type_tiers (TT_LIB)');
+
+
+
 
 
 
