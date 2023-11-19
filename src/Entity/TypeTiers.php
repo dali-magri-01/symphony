@@ -17,10 +17,10 @@ class TypeTiers
     #[ORM\JoinColumn(nullable: false)]
     private ?Societe $societe = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(length: 250, nullable: true, unique:true)]
     private ?string $tt_code = null;
 
-    #[ORM\Column(length: 20, nullable: false, unique:true)]
+    #[ORM\Column(length: 250, nullable: false)]
     private ?string $tt_lib = null;
 
     public function getId(): ?int

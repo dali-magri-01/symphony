@@ -21,7 +21,7 @@ final class Version20231116165429 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE type_tiers_id_seq START WITH 1 MINVALUE 1 INCREMENT BY 1');
-        $this->addSql('CREATE TABLE type_tiers (id NUMBER(10) NOT NULL, societe_id NUMBER(10) NOT NULL, tt_code VARCHAR2(20) DEFAULT NULL NULL, tt_lib VARCHAR2(20) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE type_tiers (id NUMBER(10) NOT NULL, societe_id NUMBER(10) NOT NULL, tt_code VARCHAR2(250) DEFAULT NULL, tt_lib VARCHAR2(250) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_184BBC55FCF77503 ON type_tiers (societe_id)');
         $this->addSql('ALTER TABLE type_tiers ADD CONSTRAINT FK_184BBC55FCF77503 FOREIGN KEY (societe_id) REFERENCES societe (id)');
         $this->addSql('ALTER TABLE DEVISE DROP (CREATED_AT, UPDATED_AT)');
@@ -33,7 +33,10 @@ final class Version20231116165429 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_75EA56E0FB7336F0 ON MESSENGER_MESSAGES (queue_name)');
         $this->addSql('CREATE INDEX IDX_75EA56E0E3BD61CE ON MESSENGER_MESSAGES (available_at)');
         $this->addSql('CREATE INDEX IDX_75EA56E016BA31DB ON MESSENGER_MESSAGES (delivered_at)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_184BBC55E8035551 ON TYPE_TIERS (tt_lib)');
+        $this->addSql('DROP INDEX uniq_184bbc55e8035551');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_184BBC55F9EAD30F ON TYPE_TIERS (tt_code)');
+
+
 
     }
 
@@ -52,7 +55,8 @@ final class Version20231116165429 extends AbstractMigration
         $this->addSql('ALTER TABLE societe DROP CONSTRAINT FK_19653DBDF4445056');
         $this->addSql('ALTER TABLE pays ADD (CREATED_AT TIMESTAMP(0) NOT NULL, UPDATED_AT TIMESTAMP(0) NOT NULL)');
         $this->addSql('ALTER TABLE menu DROP CONSTRAINT FK_7D053A93727ACA70');
-        $this->addSql('DROP INDEX UNIQ_184BBC55E8035551');
+        $this->addSql('DROP INDEX UNIQ_184BBC55F9EAD30F');
+
 
 
     }
