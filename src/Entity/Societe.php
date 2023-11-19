@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use App\Repository\SocieteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -45,6 +47,14 @@ class Societe
 
     #[ORM\ManyToOne(inversedBy: 'societes')]
     private ?Devise $devise = null;
+
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: TypeTiers::class)]
+    private Collection $typeTiers;
+
+    public function __construct()
+    {
+        $this->typeTiers = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -186,5 +196,35 @@ class Societe
     public function setDevise(?Devise $devise): void
     {
         $this->devise = $devise;
+    }
+
+    /**
+     * @return Collection<int, TypeTiers>
+     */
+    public function getTypeTiers(): Collection
+    {
+        return $this->typeTiers;
+    }
+
+    public function addTypeTier(TypeTiers $typeTier): static
+    {
+        if (!$this->typeTiers->contains($typeTier)) {
+            $this->typeTiers->add($typeTier);
+            $typeTier->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeTier(TypeTiers $typeTier): static
+    {
+        if ($this->typeTiers->removeElement($typeTier)) {
+            // set the owning side to null (unless already changed)
+            if ($typeTier->getSociete() === $this) {
+                $typeTier->setSociete(null);
+            }
+        }
+
+        return $this;
     }
 }
