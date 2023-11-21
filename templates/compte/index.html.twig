@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte index{% endblock %}
+
+{% block body %}
+    <h1>Compte index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cp_code</th>
+                <th>Cp_lib</th>
+                <th>Cp_type_tiers</th>
+                <th>Cp_sens</th>
+                <th>Cp_actif</th>
+                <th>Cp_traduction</th>
+                <th>Cp_analytique</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for compte in comptes %}
+            <tr>
+                <td>{{ compte.id }}</td>
+                <td>{{ compte.cpCode }}</td>
+                <td>{{ compte.cpLib }}</td>
+                <td>{{ compte.cpTypeTiers }}</td>
+                <td>{{ compte.cpSens }}</td>
+                <td>{{ compte.cpActif }}</td>
+                <td>{{ compte.cpTraduction }}</td>
+                <td>{{ compte.cpAnalytique }}</td>
+                <td>{{ compte.createdAt ? compte.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ compte.updatedAt ? compte.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_compte_show', {'id': compte.id}) }}">show</a>
+                    <a href="{{ path('app_compte_edit', {'id': compte.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_compte_new') }}">Create new</a>
+{% endblock %}
