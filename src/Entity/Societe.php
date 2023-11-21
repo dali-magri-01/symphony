@@ -51,9 +51,13 @@ class Societe
     #[ORM\OneToMany(mappedBy: 'societe', targetEntity: TypeTiers::class)]
     private Collection $typeTiers;
 
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Compte::class)]
+    private Collection $comptes;
+
     public function __construct()
     {
         $this->typeTiers = new ArrayCollection();
+        $this->comptes = new ArrayCollection();
     }
 
 
@@ -222,6 +226,36 @@ class Societe
             // set the owning side to null (unless already changed)
             if ($typeTier->getSociete() === $this) {
                 $typeTier->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compte>
+     */
+    public function getComptes(): Collection
+    {
+        return $this->comptes;
+    }
+
+    public function addCompte(Compte $compte): static
+    {
+        if (!$this->comptes->contains($compte)) {
+            $this->comptes->add($compte);
+            $compte->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompte(Compte $compte): static
+    {
+        if ($this->comptes->removeElement($compte)) {
+            // set the owning side to null (unless already changed)
+            if ($compte->getSociete() === $this) {
+                $compte->setSociete(null);
             }
         }
 
