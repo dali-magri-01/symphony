@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tiers{% endblock %}
+
+{% block body %}
+    <h1>Tiers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tier.id }}</td>
+            </tr>
+            <tr>
+                <th>Tr_code</th>
+                <td>{{ tier.trCode }}</td>
+            </tr>
+            <tr>
+                <th>Tr_lib</th>
+                <td>{{ tier.trLib }}</td>
+            </tr>
+            <tr>
+                <th>Tr_adresse</th>
+                <td>{{ tier.trAdresse }}</td>
+            </tr>
+            <tr>
+                <th>Tr_type_ident</th>
+                <td>{{ tier.trTypeIdent }}</td>
+            </tr>
+            <tr>
+                <th>Tr_ident</th>
+                <td>{{ tier.trIdent }}</td>
+            </tr>
+            <tr>
+                <th>Tr_activite</th>
+                <td>{{ tier.trActivite }}</td>
+            </tr>
+            <tr>
+                <th>Tr_email</th>
+                <td>{{ tier.trEmail }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ tier.createdAt ? tier.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ tier.updatedAt ? tier.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tiers_index') }}">back to list</a>
+
+    <a href="{{ path('app_tiers_edit', {'id': tier.id}) }}">edit</a>
+
+    {{ include('tiers/_delete_form.html.twig') }}
+{% endblock %}
