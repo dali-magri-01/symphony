@@ -6,10 +6,12 @@ use App\Repository\TypeTiersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: TypeTiersRepository::class)]
 class TypeTiers
 {
+    use TimestampableEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,9 +30,13 @@ class TypeTiers
     #[ORM\OneToMany(mappedBy: 'cp_type_tiers', targetEntity: Compte::class)]
     private Collection $comptes;
 
+    #[ORM\OneToMany(mappedBy: 'tr_type_tiers', targetEntity: Tiers::class)]
+    private Collection $tiers;
+
     public function __construct()
     {
         $this->comptes = new ArrayCollection();
+        $this->tiers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,6 +109,36 @@ class TypeTiers
             // set the owning side to null (unless already changed)
             if ($compte->getCpTypeTiers() === $this) {
                 $compte->setCpTypeTiers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tiers>
+     */
+    public function getTiers(): Collection
+    {
+        return $this->tiers;
+    }
+
+    public function addTier(Tiers $tier): static
+    {
+        if (!$this->tiers->contains($tier)) {
+            $this->tiers->add($tier);
+            $tier->setTrTypeTiers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTier(Tiers $tier): static
+    {
+        if ($this->tiers->removeElement($tier)) {
+            // set the owning side to null (unless already changed)
+            if ($tier->getTrTypeTiers() === $this) {
+                $tier->setTrTypeTiers(null);
             }
         }
 

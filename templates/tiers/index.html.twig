@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tiers index{% endblock %}
+
+{% block body %}
+    <h1>Tiers index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tr_code</th>
+                <th>Tr_lib</th>
+                <th>Tr_adresse</th>
+                <th>Tr_type_ident</th>
+                <th>Tr_ident</th>
+                <th>Tr_activite</th>
+                <th>Tr_email</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tier in tiers %}
+            <tr>
+                <td>{{ tier.id }}</td>
+                <td>{{ tier.trCode }}</td>
+                <td>{{ tier.trLib }}</td>
+                <td>{{ tier.trAdresse }}</td>
+                <td>{{ tier.trTypeIdent }}</td>
+                <td>{{ tier.trIdent }}</td>
+                <td>{{ tier.trActivite }}</td>
+                <td>{{ tier.trEmail }}</td>
+                <td>{{ tier.createdAt ? tier.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ tier.updatedAt ? tier.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_tiers_show', {'id': tier.id}) }}">show</a>
+                    <a href="{{ path('app_tiers_edit', {'id': tier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tiers_new') }}">Create new</a>
+{% endblock %}

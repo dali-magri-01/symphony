@@ -54,10 +54,14 @@ class Societe
     #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Compte::class)]
     private Collection $comptes;
 
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Tiers::class)]
+    private Collection $tiers;
+
     public function __construct()
     {
         $this->typeTiers = new ArrayCollection();
         $this->comptes = new ArrayCollection();
+        $this->tiers = new ArrayCollection();
     }
 
 
@@ -256,6 +260,36 @@ class Societe
             // set the owning side to null (unless already changed)
             if ($compte->getSociete() === $this) {
                 $compte->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tiers>
+     */
+    public function getTiers(): Collection
+    {
+        return $this->tiers;
+    }
+
+    public function addTier(Tiers $tier): static
+    {
+        if (!$this->tiers->contains($tier)) {
+            $this->tiers->add($tier);
+            $tier->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTier(Tiers $tier): static
+    {
+        if ($this->tiers->removeElement($tier)) {
+            // set the owning side to null (unless already changed)
+            if ($tier->getSociete() === $this) {
+                $tier->setSociete(null);
             }
         }
 
