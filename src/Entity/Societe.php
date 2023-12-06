@@ -57,11 +57,23 @@ class Societe
     #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Tiers::class)]
     private Collection $tiers;
 
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Monnaie::class)]
+    private Collection $monnaies;
+
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Projet::class)]
+    private Collection $projets;
+
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Journal::class)]
+    private Collection $journals;
+
     public function __construct()
     {
         $this->typeTiers = new ArrayCollection();
         $this->comptes = new ArrayCollection();
         $this->tiers = new ArrayCollection();
+        $this->monnaies = new ArrayCollection();
+        $this->projets = new ArrayCollection();
+        $this->journals = new ArrayCollection();
     }
 
 
@@ -290,6 +302,96 @@ class Societe
             // set the owning side to null (unless already changed)
             if ($tier->getSociete() === $this) {
                 $tier->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Monnaie>
+     */
+    public function getMonnaies(): Collection
+    {
+        return $this->monnaies;
+    }
+
+    public function addMonnaie(Monnaie $monnaie): static
+    {
+        if (!$this->monnaies->contains($monnaie)) {
+            $this->monnaies->add($monnaie);
+            $monnaie->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMonnaie(Monnaie $monnaie): static
+    {
+        if ($this->monnaies->removeElement($monnaie)) {
+            // set the owning side to null (unless already changed)
+            if ($monnaie->getSociete() === $this) {
+                $monnaie->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Projet>
+     */
+    public function getProjets(): Collection
+    {
+        return $this->projets;
+    }
+
+    public function addProjet(Projet $projet): static
+    {
+        if (!$this->projets->contains($projet)) {
+            $this->projets->add($projet);
+            $projet->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjet(Projet $projet): static
+    {
+        if ($this->projets->removeElement($projet)) {
+            // set the owning side to null (unless already changed)
+            if ($projet->getSociete() === $this) {
+                $projet->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Journal>
+     */
+    public function getJournals(): Collection
+    {
+        return $this->journals;
+    }
+
+    public function addJournal(Journal $journal): static
+    {
+        if (!$this->journals->contains($journal)) {
+            $this->journals->add($journal);
+            $journal->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJournal(Journal $journal): static
+    {
+        if ($this->journals->removeElement($journal)) {
+            // set the owning side to null (unless already changed)
+            if ($journal->getSociete() === $this) {
+                $journal->setSociete(null);
             }
         }
 

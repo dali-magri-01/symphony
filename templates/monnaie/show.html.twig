@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Monnaie{% endblock %}
+
+{% block body %}
+    <h1>Monnaie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ monnaie.id }}</td>
+            </tr>
+            <tr>
+                <th>Mon_code</th>
+                <td>{{ monnaie.monCode }}</td>
+            </tr>
+            <tr>
+                <th>Mon_lib</th>
+                <td>{{ monnaie.monLib }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_monnaie_index') }}">back to list</a>
+
+    <a href="{{ path('app_monnaie_edit', {'id': monnaie.id}) }}">edit</a>
+
+    {{ include('monnaie/_delete_form.html.twig') }}
+{% endblock %}
