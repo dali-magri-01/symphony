@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -40,6 +42,14 @@ class Compte
 
     #[ORM\Column(length: 255, nullable: true, options: ['default' => 'N'])]
     private ?string $cp_analytique = 'N';
+
+    #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Journal::class)]
+    private Collection $journals;
+
+    public function __construct()
+    {
+        $this->journals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,9 +145,44 @@ class Compte
         return $this->cp_analytique;
     }
 
+    public function getConcatenatedLabel(): string
+    {
+        return $this->cp_lib . ' || ' . $this->cp_code;
+    }
+
     public function setCpAnalytique(string $cp_analytique): static
     {
         $this->cp_analytique = $cp_analytique;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Journal>
+     */
+    public function getJournals(): Collection
+    {
+        return $this->journals;
+    }
+
+    public function addJournal(Journal $journal): static
+    {
+        if (!$this->journals->contains($journal)) {
+            $this->journals->add($journal);
+            $journal->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJournal(Journal $journal): static
+    {
+        if ($this->journals->removeElement($journal)) {
+            // set the owning side to null (unless already changed)
+            if ($journal->getCompte() === $this) {
+                $journal->setCompte(null);
+            }
+        }
 
         return $this;
     }
