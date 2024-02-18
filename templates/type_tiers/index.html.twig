@@ -3,35 +3,67 @@
 {% block title %}TypeTiers index{% endblock %}
 
 {% block body %}
-    <h1>TypeTiers index</h1>
+<h1>Create new Tiers</h1>
+<div class="header">
+    <h1 class="header-title">
+        Type Tiers
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Type Tiers</a></li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-xl-2">
+                        </div>
+                        <div class="col-lg-9 col-xl-10">
+                            <form class="float-lg-end">
+                                <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('app_type_tiers_new')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Ajouter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tt_code</th>
-                <th>Tt_lib</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for type_tier in type_tiers %}
-            <tr>
-                <td>{{ type_tier.id }}</td>
-                <td>{{ type_tier.ttCode }}</td>
-                <td>{{ type_tier.ttLib }}</td>
-                <td>
-                    <a href="{{ path('app_type_tiers_show', {'id': type_tier.id}) }}">show</a>
-                    <a href="{{ path('app_type_tiers_edit', {'id': type_tier.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            <div class="card-body">
+                    <table id="tiers" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Libelle</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for type_tier in type_tiers %}
+                        <tr>
+                            <td>{{ type_tier.ttCode }}</td>
+                            <td>{{ type_tier.ttLib }}</td>
+                            <td width="5%">
+                                <a href="{{ path('app_type_tiers_edit', {'id': type_tier.id}) }}"><i class="align-middle fas fa-fw fa-pen " style="color: dimgray;"></i></a>
 
-    <a href="{{ path('app_type_tiers_new') }}">Create new</a>
-{% endblock %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+ {% endblock %}

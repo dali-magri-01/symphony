@@ -1,41 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Menu index{% endblock %}
+{% block title %}TypeTiers index{% endblock %}
 
 {% block body %}
-    <h1>Menu index</h1>
+<h1>Create new Tiers</h1>
+<div class="header">
+    <h1 class="header-title">
+        Menu
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_monnaie_index')}}">Menu </a></li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-xl-2">
+                        </div>
+                        <div class="col-lg-9 col-xl-10">
+                            <form class="float-lg-end">
+                                <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('app_menu_new')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Ajouter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-{#                <th>ParentId</th>#}
-                <th>Ordre</th>
-                <th>Link</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for menu in menus %}
-            <tr>
-                <td>{{ menu.id }}</td>
-                <td>{{ menu.name }}</td>
-{#                <td>{{ menu.parentId }}</td>#}
-                <td>{{ menu.ordre }}</td>
-                <td>{{ menu.link }}</td>
-                <td>
-                    <a href="{{ path('app_menu_show', {'id': menu.id}) }}">show</a>
-                    <a href="{{ path('app_menu_edit', {'id': menu.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Parent</th>
+                                <th>Ordre</th>
+                                <th>Link</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for menu in menus %}
+                            <tr>
+                                <td>{{ menu.name }}</td>
+                                <td>{{ menu.parentId.name ?? '--' }}</td>
+                                <td>{{ menu.ordre }}</td>
+                                <td>{{ menu.link }}</td>
 
-    <a href="{{ path('app_menu_new') }}">Create new</a>
+                                <td width="5%">
+                                    <a href="{{ path('app_menu_edit', {'id': menu.id}) }}"><i class="align-middle fas fa-fw fa-pen " style="color: dimgray;"></i></a>
+
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

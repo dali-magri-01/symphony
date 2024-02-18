@@ -1,0 +1,38 @@
+<div class="header">
+    <h1 class="header-title">
+        Devise
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_devise_index')}}">Devise</a></li>
+        </ol>
+    </nav>
+</div>
+{{ form_start(form)}}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Saisie vos données</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="mb-3">
+                            {{ form_label(form.code) }}
+                            {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <button class="btn btn-success px-4">{{ button_label|default('Enregistrer') }}</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+

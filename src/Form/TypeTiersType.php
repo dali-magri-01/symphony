@@ -13,8 +13,14 @@ class TypeTiersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('tt_code')
-            ->add('tt_lib')
+            ->add('tt_code', null, [
+            'label' => 'Code',
+            'required' => true,
+            ])
+            ->add('tt_lib',null, [
+                'label' => 'Libelle',
+                'required' => true,
+            ])
             ->add('societe', EntityType::class, [
                 'class' => 'App\Entity\Societe',
                 'choice_label' => 'libelle',

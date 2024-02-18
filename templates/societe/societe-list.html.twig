@@ -1,97 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %}Edit Tiers{% endblock %}
 
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3"></div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Société</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <div id="layoutSidenav_content">
-        <main>
-
-            <div class="container-fluid px-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-3 col-xl-2">
+{% block body %}<h1>Create new Tiers</h1>
+<div class="header">
+    <h1 class="header-title">
+        Societes
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Societes</a></li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-xl-2">
+                        </div>
+                        <div class="col-lg-9 col-xl-10">
+                            <form class="float-lg-end">
+                                <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('app_add_societe')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Ajouter</a>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-9 col-xl-10">
-                                        <form class="float-lg-end">
-                                            <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
-                                                <div class="col">
-                                                      <div class="position-relative">
-                                                          <a href="{{ path('app_add_societe')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Sociéte</a>
-                                                      </div>
-                                                  </div>
-                                            </div>
-                                        </form>
-                                     </div>
-
                                 </div>
-
-                            </div>
+                            </form>
                         </div>
 
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <table id="example" class="display responsive nowrap medium" style="width:100%">
-                            <thead>
-                                 <tr>
-                                    <th>Nom</th>
-                                    <th>Matricule Fiscale</th>
-                                    <th>RC</th>
-                                    <th>Pays</th>
-                                    <th>Actif</th>
-                                    <th></th>
-                                 </tr>
-                             </thead>
-                              <tbody>
-                                    {% for societe in societes %}
-                                        <tr>
-                                            <td>{{societe.libelle}}</td>
-                                            <td>{{societe.matriculeFiscale}}</td>
-                                            <td>{{societe.rc}}</td>
-                                            {% if societe.getPays() is not null %}
-                                                <td>{{ societe.getPays().getNomFrFr() }}</td>
-                                            {% else %}
-                                                <td>No country</td>
-                                            {% endif %}
-                                            {% if societe.actif==1%}
-                                              <td><div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3"><i class='bx bxs-circle me-1'></i>Oui</div></td>
+                <div class="card-body">
+                    <table id="tiers" class="table table-striped" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Matricule Fiscale</th>
+                            <th>RC</th>
+                            <th>Pays</th>
+                            <th>Actif</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for societe in societes %}
+                            <tr>
+                                <td>{{societe.libelle}}</td>
+                                <td>{{societe.matriculeFiscale}}</td>
+                                <td>{{societe.rc}}</td>
+                                {% if societe.getPays() is not null %}
+                                    <td>{{ societe.getPays().getNomFrFr() }}</td>
+                                {% else %}
+                                    <td>No country</td>
+                                {% endif %}
+                                <td>{{ societe.actif ? '<div class="badge rounded-pill text-success  "><i class="bx bxs-circle me-1"></i></div>' : '<div class="badge rounded-pill text-warning "><i class="bx bxs-circle align-middle me-1"></i></div>' }}</td>
+                                <td width="2%">
+                                    <a href="{{ path('societe.edit', {'id': societe.id}) }}"><i class="align-middle fas fa-fw fa-pen " style="color: dimgray;"></i></a>
+                                </td>
 
-                                            {% else %}
-                                                <td><div class="badge rounded-pill text-warning bg-light-warning p-2 text-uppercase px-3"><i class='bx bxs-circle align-middle me-1'></i>Non</div></td>
-                                             {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
 
-                                            <td width="2%">
-                                                <a class="btn btn-primary" href="{{ path('societe.edit' , {id: societe.id}) }}"><span class="fa fa-pencil"></span></a>
-                                                <a href="{{ path('societe.delete' , {id: societe.id}) }}" class="btn btn-danger"><span class="fa fa-remove"></span></a>
-                                            </td>
-
-                                        </tr>
-                                    {% endfor %}
-                              </tbody>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-        </main>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-{% endblock %}
+</div>
 
-{% block javascripts %}
-    {{ parent() }}
-{#        <script src="{{ asset('js/app.js') }}"></script>#}
-{% endblock %}
+
+                    {% endblock %}

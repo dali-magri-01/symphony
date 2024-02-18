@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="semi-dark">
+<html lang="fr">
 <head>
     <title>{% block title %}Welcome!{% endblock %}</title>
     <meta charset="UTF-8">
@@ -8,80 +8,83 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        <link rel="icon" href="{{ asset('build/images/favicon-32x32.png') }}" type="image/png"/>
-        {#        <link href="{{ asset('css/pace.min.css') }}" rel="stylesheet"/>#}
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     {% endblock %}
 </head>
-<body class="bg-login">
+<body class="theme-blue">
 <!--wrapper-->
+<div class="splash active">
+    <div class="splash-icon"></div>
+</div>
+
 <div class="wrapper">
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-    <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                <div class="col mx-auto">
-                    <div class="card mb-0">
-                        <div class="card-body">
-                            <div class="p-4">
-                                <div class="mb-3 text-center">
-                                    <img src="asset('build/images/logo.png')" width="60" alt="" />
-                                </div>
-                                <div class="text-center mb-4">
-                                    <h5 class="">Nikon Admin</h5>
-                                    <p class="mb-0">Please log in to your account</p>
-                                </div>
-                                <div class="form-body">
-                                    <form action="{{ path('app_login') }}" method="post" class="row g-3">
-                                        <div class="col-12">
-                                            <label for="username" class="form-label">Email</label>
-                                            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="jhon@example.com">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="inputChoosePassword" class="form-label">Password</label>
-                                            <div class="input-group" id="show_hide_password">
-                                                <input type="password" class="form-control border-end-0" id="password" name="_password" value="12345678" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
-                                            </div>
-                                        </div>
-                                        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
-                                        <div class="col-md-6">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                                <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 text-end"><a href="auth-basic-forgot-password.html">Forgot Password ?</a>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="d-grid">
-                                                <button type="submit" class="btn btn-primary">Sign in</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="text-center ">
-                                                <p class="mb-0">Don't have an account yet? <a href="register">Sign up here</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-                                    <hr/>
-                                </div>
 
+
+    <main class="main h-100 w-100">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                    <div class="d-table-cell align-middle">
+
+                        <div class="text-center mt-4">
+                            <h1 class="h2">Welcome back</h1>
+                            <p class="lead">
+                                Sign in to your account to continue
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="m-sm-4">
+                                    <div class="text-center">
+                                        <img src="asset('build/images/logo.png')" width="60" alt="" />
+                                    </div>
+                                    <div class="form-body">
+                                        <form action="{{ path('app_login') }}" method="post" class="row g-3">
+                                            <div class="col-12">
+                                                <label for="username" class="form-label">Email</label>
+                                                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="jhon@example.com">
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="inputChoosePassword" class="form-label">Password</label>
+                                                <div class="input-group" id="show_hide_password">
+                                                    <input type="password" class="form-control border-end-0" id="password" name="_password" value="12345678" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                </div>
+                                            </div>
+                                            {# If you want to control the URL the user is redirected to on success
+                                        <input type="hidden" name="_target_path" value="/account"> #}
+                                            <div class="col-md-6">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-end"><a href="auth-basic-forgot-password.html">Forgot Password ?</a>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="text-center ">
+                                                    <p class="mb-0">Don't have an account yet? <a href="register">Sign up here</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-            <!--end row-->
         </div>
-    </div>
-</div>
-<!--end wrapper-->
+    </main>
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

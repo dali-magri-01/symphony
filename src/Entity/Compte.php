@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: CompteRepository::class)]
+#[ORM\UniqueConstraint(name: 'unique_index_societe_compte', columns: ['societe_id','cp_code'])]
+
 class Compte
 {
     use TimestampableEntity;
@@ -18,7 +20,7 @@ class Compte
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'comptes')]
-    #[ORM\JoinColumn(unique: true,nullable: false)]
+    #[ORM\JoinColumn(name: "societe_id", nullable: false)]
     private ?Societe $societe = null;
 
     #[ORM\Column(length: 255, unique: true, nullable: false)]

@@ -3,49 +3,75 @@
 {% block title %}Tiers index{% endblock %}
 
 {% block body %}
-    <h1>Tiers index</h1>
+    <h1>Create new Tiers</h1>
+    <div class="header">
+        <h1 class="header-title">
+            Tiers
+        </h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Tiers</a></li>
+            </ol>
+        </nav>
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-xl-2">
+                    </div>
+                    <div class="col-lg-9 col-xl-10">
+                        <form class="float-lg-end">
+                            <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
+                                <div class="col">
+                                    <div class="position-relative">
+                                        <a href="{{ path('app_tiers_new')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Ajouter</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tr_code</th>
-                <th>Tr_lib</th>
-                <th>Tr_adresse</th>
-                <th>Tr_type_ident</th>
-                <th>Tr_ident</th>
-                <th>Tr_activite</th>
-                <th>Tr_email</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tier in tiers %}
-            <tr>
-                <td>{{ tier.id }}</td>
-                <td>{{ tier.trCode }}</td>
-                <td>{{ tier.trLib }}</td>
-                <td>{{ tier.trAdresse }}</td>
-                <td>{{ tier.trTypeIdent }}</td>
-                <td>{{ tier.trIdent }}</td>
-                <td>{{ tier.trActivite }}</td>
-                <td>{{ tier.trEmail }}</td>
-                <td>{{ tier.createdAt ? tier.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tier.updatedAt ? tier.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_tiers_show', {'id': tier.id}) }}">show</a>
-                    <a href="{{ path('app_tiers_edit', {'id': tier.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                </div>
+          </div>
+        <div class="card-body">
+        <table id="tiers" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Libelle</th>
+                    <th>Adresse</th>
+                    <th>Type Ident</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tier in tiers %}
+                <tr>
+                    <td>{{ tier.id }}</td>
+                    <td>{{ tier.trCode }}</td>
+                    <td>{{ tier.trLib }}</td>
+                    <td>{{ tier.trAdresse }}</td>
+                    <td>{{ tier.trTypeIdent }}</td>
+                    <td width="5%">
+                        <a href="{{ path('app_tiers_edit', {'id': tier.id}) }}"><i class="align-middle fas fa-fw fa-pen " style="color: dimgray;"></i></a>
+{#                        <a href="{{ path('', {'id': tier.id}) }}"><i class="align-middle fas fa-fw fa-trash" style="color: red;"></i></a>#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+       </div>
+      </div>
+     </div>
+    </div>
 
-    <a href="{{ path('app_tiers_new') }}">Create new</a>
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+
+    {#        <script src="{{ asset('js/app.js') }}"></script>#}
 {% endblock %}

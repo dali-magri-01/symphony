@@ -3,11 +3,10 @@
 {% block title %}Edit Compte{% endblock %}
 
 {% block body %}
-    <h1>Edit Compte</h1>
 
-    {{ include('compte/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('compte/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_compte_index') }}">back to list</a>
+{#    <a href="{{ path('app_compte_index') }}">back to list</a>#}
 
-    {{ include('compte/_delete_form.html.twig') }}
+{#    {{ include('compte/_delete_form.html.twig') }}#}
 {% endblock %}

@@ -3,11 +3,10 @@
 {% block title %}Edit Journal{% endblock %}
 
 {% block body %}
-    <h1>Edit Journal</h1>
 
-    {{ include('journal/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('journal/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_journal_index') }}">back to list</a>
+{#    <a href="{{ path('app_journal_index') }}">back to list</a>#}
 
-    {{ include('journal/_delete_form.html.twig') }}
+{#    {{ include('journal/_delete_form.html.twig') }}#}
 {% endblock %}

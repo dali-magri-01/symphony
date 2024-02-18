@@ -21,6 +21,23 @@ class MenuRepository extends ServiceEntityRepository
         parent::__construct($registry, Menu::class);
     }
 
+    public function findByParentIdIsNotNull()
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.parentId IS NOT NULL and m.active=1')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByParentIdIsNull()
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.parentId IS  NULL and m.active=1')
+            ->orderBy('m.ordre', 'ASC') // Tri par le champ 'name' par ordre croissant
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Menu[] Returns an array of Menu objects
 //     */

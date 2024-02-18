@@ -15,8 +15,14 @@ class CompteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('cp_code')
-            ->add('cp_lib')
+            ->add('cp_code',null, [
+                'label' => 'Code',
+                'required' => true,
+            ])
+            ->add('cp_lib',null, [
+                'label' => 'Libelle',
+                'required' => true,
+            ])
             ->add('cp_type_tiers', EntityType::class, [
                 'class' => 'App\Entity\TypeTiers',
                 'choice_label' => 'tt_lib',
@@ -53,7 +59,11 @@ class CompteType extends AbstractType
                 ],
                 'placeholder' => '', // Optional placeholder text
             ])
-            ->add('cp_traduction')
+            ->add('cp_traduction',null, [
+                'label' => 'Traduction',
+                'required' => false,
+
+            ])
             ->add('cp_analytique', ChoiceType::class, [
                 'label' => 'Analytique',
                 'required' => false,

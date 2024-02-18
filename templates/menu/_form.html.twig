@@ -1,4 +1,61 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="header">
+    <h1 class="header-title">
+        Menu
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_menu_index')}}">Menu</a></li>
+        </ol>
+    </nav>
+</div>
+{{ form_start(form)}}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Saisie vos données</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="mb-3">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.parentId) }}
+                            {{ form_widget(form.parentId, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.ordre) }}
+                            {{ form_widget(form.ordre, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.link) }}
+                            {{ form_widget(form.link, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.icon) }}
+                            {{ form_widget(form.icon, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.active) }}
+                            {{ form_widget(form.active, {
+                                'id': 'flexSwitchCheckDanger',
+                                'attr': {'class': 'form-check-input custom-checkbox', 'role': 'switch'},
+
+                            }) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <button class="btn btn-success px-4">{{ button_label|default('Enregistrer') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+

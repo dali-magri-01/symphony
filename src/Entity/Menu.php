@@ -35,6 +35,13 @@ class Menu
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $icon = null;
+
+    #[ORM\Column]
+    private ?bool $active = null;
+
+
     #[Pure] public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -104,4 +111,29 @@ class Menu
 
         return $this;
     }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon): static
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
 }
