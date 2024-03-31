@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TiersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -43,6 +45,19 @@ class Tiers
     #[ORM\ManyToOne(inversedBy: 'tiers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Societe $societe = null;
+
+    #[ORM\OneToMany(mappedBy: 'tier', targetEntity: Ecritures::class)]
+    private Collection $ecritures;
+
+    public function __construct()
+    {
+        $this->ecritures = new ArrayCollection();
+    }
+
+    public function getlibelletier(): string
+    {
+        return $this->tr_code . ' || ' . $this->tr_lib;
+    }
 
     public function getId(): ?int
     {
@@ -153,6 +168,36 @@ class Tiers
     public function setSociete(?Societe $societe): static
     {
         $this->societe = $societe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ecritures>
+     */
+    public function getEcritures(): Collection
+    {
+        return $this->ecritures;
+    }
+
+    public function addEcriture(Ecritures $ecriture): static
+    {
+        if (!$this->ecritures->contains($ecriture)) {
+            $this->ecritures->add($ecriture);
+            $ecriture->setTier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEcriture(Ecritures $ecriture): static
+    {
+        if ($this->ecritures->removeElement($ecriture)) {
+            // set the owning side to null (unless already changed)
+            if ($ecriture->getTier() === $this) {
+                $ecriture->setTier(null);
+            }
+        }
 
         return $this;
     }

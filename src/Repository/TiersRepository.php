@@ -21,6 +21,21 @@ class TiersRepository extends ServiceEntityRepository
         parent::__construct($registry, Tiers::class);
     }
 
+
+    public function findTiersByAccountId($accountId): array
+    {
+        $qb = $this->createQueryBuilder('tiers')
+            ->select('tiers')
+            ->join('tiers.tr_type_tiers', 'typeTiers') // Jointure avec TypeTiers
+            ->join('typeTiers.comptes', 'compte') // Jointure avec Compte via TypeTiers
+            ->where('compte.id = :accountId')
+            ->setParameter('accountId', $accountId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
 //    /**
 //     * @return Tiers[] Returns an array of Tiers objects
 //     */

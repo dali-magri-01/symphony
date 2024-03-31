@@ -25,17 +25,17 @@ class CompteType extends AbstractType
             ])
             ->add('cp_type_tiers', EntityType::class, [
                 'class' => 'App\Entity\TypeTiers',
-                'choice_label' => 'tt_lib',
+                'choice_label' => 'getlibelletypetier',
                 'label' => 'Type Tiers',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control select2',
                 ],
-                'placeholder' => 'Choisissez un Compte',
+                'placeholder' => 'Choisissez un type ',
             ])
             ->add('cp_sens', ChoiceType::class, [
                 'label' => 'Sens',
-                'required' => false,
+                'required' => True,
                 'choices' => [
                     'Débit' => 'D',
                     'Crédit' => 'C',

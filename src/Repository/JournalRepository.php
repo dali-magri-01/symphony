@@ -21,6 +21,15 @@ class JournalRepository extends ServiceEntityRepository
         parent::__construct($registry, Journal::class);
     }
 
+    public function getMonnaieIdByJournalId($journalId): ?int
+    {
+        $journal = $this->find($journalId);
+        if ($journal) {
+            return $journal->getMonnaie()->getId();
+        }
+
+        return null;
+    }
 //    /**
 //     * @return Journal[] Returns an array of Journal objects
 //     */

@@ -48,11 +48,6 @@ class Societe
     #[ORM\ManyToOne(inversedBy: 'societes')]
     private ?Devise $devise = null;
 
-    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: TypeTiers::class)]
-    private Collection $typeTiers;
-
-    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Compte::class)]
-    private Collection $comptes;
 
     #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Tiers::class)]
     private Collection $tiers;
@@ -63,17 +58,32 @@ class Societe
     #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Projet::class)]
     private Collection $projets;
 
+
+    #[ORM\ManyToOne(inversedBy: 'societe')]
+    private ?TypeTiers $typeTier = null;
+
+
+    #[ORM\ManyToOne(inversedBy: 'societe')]
+    private ?Compte $compte = null;
+
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: TypeTiers::class)]
+    private Collection $typeTiers;
+
     #[ORM\OneToMany(mappedBy: 'societe', targetEntity: Journal::class)]
     private Collection $journals;
 
+    #[ORM\OneToMany(mappedBy: 'societe', targetEntity: PieceComptable::class)]
+    private Collection $pieceComptables;
+
+
     public function __construct()
     {
-        $this->typeTiers = new ArrayCollection();
-        $this->comptes = new ArrayCollection();
         $this->tiers = new ArrayCollection();
         $this->monnaies = new ArrayCollection();
         $this->projets = new ArrayCollection();
+        $this->typeTiers = new ArrayCollection();
         $this->journals = new ArrayCollection();
+        $this->pieceComptables = new ArrayCollection();
     }
 
 
@@ -218,65 +228,8 @@ class Societe
         $this->devise = $devise;
     }
 
-    /**
-     * @return Collection<int, TypeTiers>
-     */
-    public function getTypeTiers(): Collection
-    {
-        return $this->typeTiers;
-    }
 
-    public function addTypeTier(TypeTiers $typeTier): static
-    {
-        if (!$this->typeTiers->contains($typeTier)) {
-            $this->typeTiers->add($typeTier);
-            $typeTier->setSociete($this);
-        }
 
-        return $this;
-    }
-
-    public function removeTypeTier(TypeTiers $typeTier): static
-    {
-        if ($this->typeTiers->removeElement($typeTier)) {
-            // set the owning side to null (unless already changed)
-            if ($typeTier->getSociete() === $this) {
-                $typeTier->setSociete(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Compte>
-     */
-    public function getComptes(): Collection
-    {
-        return $this->comptes;
-    }
-
-    public function addCompte(Compte $compte): static
-    {
-        if (!$this->comptes->contains($compte)) {
-            $this->comptes->add($compte);
-            $compte->setSociete($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompte(Compte $compte): static
-    {
-        if ($this->comptes->removeElement($compte)) {
-            // set the owning side to null (unless already changed)
-            if ($compte->getSociete() === $this) {
-                $compte->setSociete(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Tiers>
@@ -368,6 +321,62 @@ class Societe
         return $this;
     }
 
+
+    public function getTypeTier(): ?TypeTiers
+    {
+        return $this->typeTier;
+    }
+
+    public function setTypeTier(?TypeTiers $typeTier): static
+    {
+        $this->typeTier = $typeTier;
+
+        return $this;
+    }
+
+
+    public function getCompte(): ?Compte
+    {
+        return $this->compte;
+    }
+
+    public function setCompte(?Compte $compte): static
+    {
+        $this->compte = $compte;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeTiers>
+     */
+    public function getTypeTiers(): Collection
+    {
+        return $this->typeTiers;
+    }
+
+    public function addTypeTier(TypeTiers $typeTier): static
+    {
+        if (!$this->typeTiers->contains($typeTier)) {
+            $this->typeTiers->add($typeTier);
+            $typeTier->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeTier(TypeTiers $typeTier): static
+    {
+        if ($this->typeTiers->removeElement($typeTier)) {
+            // set the owning side to null (unless already changed)
+            if ($typeTier->getSociete() === $this) {
+                $typeTier->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Journal>
      */
@@ -397,4 +406,36 @@ class Societe
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, PieceComptable>
+     */
+    public function getPieceComptables(): Collection
+    {
+        return $this->pieceComptables;
+    }
+
+    public function addPieceComptable(PieceComptable $pieceComptable): static
+    {
+        if (!$this->pieceComptables->contains($pieceComptable)) {
+            $this->pieceComptables->add($pieceComptable);
+            $pieceComptable->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removePieceComptable(PieceComptable $pieceComptable): static
+    {
+        if ($this->pieceComptables->removeElement($pieceComptable)) {
+            // set the owning side to null (unless already changed)
+            if ($pieceComptable->getSociete() === $this) {
+                $pieceComptable->setSociete(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

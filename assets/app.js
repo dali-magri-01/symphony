@@ -1,3 +1,4 @@
+import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -53,7 +54,8 @@ import 'jszip';
 import 'pdfmake';
 
 import jsPDF from 'jspdf';
-
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 $(document).ready(function () {
     $('#example').DataTable();
 });

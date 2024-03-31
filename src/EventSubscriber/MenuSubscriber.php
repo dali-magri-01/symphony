@@ -35,7 +35,8 @@ class MenuSubscriber implements EventSubscriberInterface
         if (!($controller instanceof MenuController)) {
             $menusparents = $this->menuRepository->findByParentIdIsNull();
             $menusfils = $this->menuRepository->findByParentIdIsNotNull();
-
+            $societe='PGSYS';
+            $monnaie=1;
             // Get the current request object
             $request = $this->requestStack->getCurrentRequest();
 
@@ -47,6 +48,8 @@ class MenuSubscriber implements EventSubscriberInterface
 
             $this->twig->addGlobal('menusparents', $menusparents);
             $this->twig->addGlobal('menusfils', $menusfils);
+            $this->twig->addGlobal('societe', $societe);
+            $this->twig->addGlobal('monnaie', $monnaie);
         }
     }
 

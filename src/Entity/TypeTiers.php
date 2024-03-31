@@ -17,9 +17,7 @@ class TypeTiers
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'typeTiers')]
-    #[ORM\JoinColumn(unique: true, nullable: false)]
-    private ?Societe $societe = null;
+
 
     #[ORM\Column(length: 250, unique: true, nullable: true)]
     private ?string $tt_code = null;
@@ -33,6 +31,11 @@ class TypeTiers
     #[ORM\OneToMany(mappedBy: 'tr_type_tiers', targetEntity: Tiers::class)]
     private Collection $tiers;
 
+    #[ORM\ManyToOne(inversedBy: 'typeTiers')]
+    private ?Societe $societe = null;
+
+
+
     public function __construct()
     {
         $this->comptes = new ArrayCollection();
@@ -44,17 +47,7 @@ class TypeTiers
         return $this->id;
     }
 
-    public function getSociete(): ?Societe
-    {
-        return $this->societe;
-    }
 
-    public function setSociete(?Societe $societe): static
-    {
-        $this->societe = $societe;
-
-        return $this;
-    }
 
     public function getTtCode(): ?string
     {
@@ -66,6 +59,11 @@ class TypeTiers
         $this->tt_code = $tt_code;
 
         return $this;
+    }
+
+    public function getlibelletypetier(): string
+    {
+        return $this->tt_code . ' || ' . $this->tt_lib;
     }
 
     public function getTtLib(): ?string
@@ -144,4 +142,18 @@ class TypeTiers
 
         return $this;
     }
+
+    public function getSociete(): ?Societe
+    {
+        return $this->societe;
+    }
+
+    public function setSociete(?Societe $societe): static
+    {
+        $this->societe = $societe;
+
+        return $this;
+    }
+
+
 }

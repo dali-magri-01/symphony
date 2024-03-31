@@ -7,3 +7,4 @@ controllers:
 export_users:
     path: /export-users
     controller: App\Controller\UserController::exportUsers
+

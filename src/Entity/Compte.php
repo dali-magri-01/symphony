@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use App\Repository\CompteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -48,10 +49,15 @@ class Compte
     #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Journal::class)]
     private Collection $journals;
 
+    #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Ecritures::class)]
+    private Collection $ecritures;
+
     public function __construct()
     {
-        $this->journals = new ArrayCollection();
+        $this->ecritures = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -188,4 +194,36 @@ class Compte
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Ecritures>
+     */
+    public function getEcritures(): Collection
+    {
+        return $this->ecritures;
+    }
+
+    public function addEcriture(Ecritures $ecriture): static
+    {
+        if (!$this->ecritures->contains($ecriture)) {
+            $this->ecritures->add($ecriture);
+            $ecriture->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEcriture(Ecritures $ecriture): static
+    {
+        if ($this->ecritures->removeElement($ecriture)) {
+            // set the owning side to null (unless already changed)
+            if ($ecriture->getCompte() === $this) {
+                $ecriture->setCompte(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

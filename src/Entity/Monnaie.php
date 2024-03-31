@@ -27,9 +27,13 @@ class Monnaie
     #[ORM\OneToMany(mappedBy: 'monnaie', targetEntity: Journal::class)]
     private Collection $journals;
 
+    #[ORM\OneToMany(mappedBy: 'monnaie', targetEntity: PieceComptable::class)]
+    private Collection $pieceComptables;
+
     public function __construct()
     {
         $this->journals = new ArrayCollection();
+        $this->pieceComptables = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +101,36 @@ class Monnaie
             // set the owning side to null (unless already changed)
             if ($journal->getMonnaie() === $this) {
                 $journal->setMonnaie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PieceComptable>
+     */
+    public function getPieceComptables(): Collection
+    {
+        return $this->pieceComptables;
+    }
+
+    public function addPieceComptable(PieceComptable $pieceComptable): static
+    {
+        if (!$this->pieceComptables->contains($pieceComptable)) {
+            $this->pieceComptables->add($pieceComptable);
+            $pieceComptable->setMonnaie($this);
+        }
+
+        return $this;
+    }
+
+    public function removePieceComptable(PieceComptable $pieceComptable): static
+    {
+        if ($this->pieceComptables->removeElement($pieceComptable)) {
+            // set the owning side to null (unless already changed)
+            if ($pieceComptable->getMonnaie() === $this) {
+                $pieceComptable->setMonnaie(null);
             }
         }
 

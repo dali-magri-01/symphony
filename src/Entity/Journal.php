@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JournalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JournalRepository::class)]
@@ -13,8 +15,6 @@ class Journal
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'journals')]
-    private ?Societe $societe = null;
 
     #[ORM\Column(length: 20)]
     private ?string $jl_code = null;
@@ -31,26 +31,34 @@ class Journal
     #[ORM\ManyToOne(inversedBy: 'journals')]
     private ?Compte $compte = null;
 
+
+
+    #[ORM\ManyToOne(inversedBy: 'journals')]
+    private ?Societe $societe = null;
+
+    #[ORM\OneToMany(mappedBy: 'journal', targetEntity: PieceComptable::class)]
+    private Collection $pieceComptables;
+
+    public function __construct()
+    {
+        $this->pieceComptables = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSociete(): ?Societe
-    {
-        return $this->societe;
-    }
-
-    public function setSociete(?Societe $societe): static
-    {
-        $this->societe = $societe;
-
-        return $this;
-    }
 
     public function getJlCode(): ?string
     {
-        return $this->jl_code;
+        return $this->jl_code ;
+    }
+
+    public function getJournal(): ?string
+    {
+        return $this->jl_code  .' || ' . $this->jl_lib;
     }
 
     public function setJlCode(string $jl_code): static
@@ -107,4 +115,49 @@ class Journal
 
         return $this;
     }
+
+
+    public function getSociete(): ?Societe
+    {
+        return $this->societe;
+    }
+
+    public function setSociete(?Societe $societe): static
+    {
+        $this->societe = $societe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PieceComptable>
+     */
+    public function getPieceComptables(): Collection
+    {
+        return $this->pieceComptables;
+    }
+
+    public function addPieceComptable(PieceComptable $pieceComptable): static
+    {
+        if (!$this->pieceComptables->contains($pieceComptable)) {
+            $this->pieceComptables->add($pieceComptable);
+            $pieceComptable->setJournal($this);
+        }
+
+        return $this;
+    }
+
+    public function removePieceComptable(PieceComptable $pieceComptable): static
+    {
+        if ($this->pieceComptables->removeElement($pieceComptable)) {
+            // set the owning side to null (unless already changed)
+            if ($pieceComptable->getJournal() === $this) {
+                $pieceComptable->setJournal(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
