@@ -7,6 +7,7 @@ use App\Form\CompteType;
 use App\Repository\CompteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,6 +42,8 @@ class CompteController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
 
     #[Route('/{id}', name: 'app_compte_show', methods: ['GET'])]
     public function show(Compte $compte): Response
@@ -78,4 +81,41 @@ class CompteController extends AbstractController
 
         return $this->redirectToRoute('app_compte_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+    /**
+     * @Route("/popup", name="app_compte_popup", methods={"POST"})
+     */
+    public function popup(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Create a new instance of the Compte entity
+        $compte = new Compte();
+
+        // Create a form for the compte
+        $form = $this->createForm(CompteType::class, $compte);
+
+        // Handle form submission
+        $form->handleRequest($request);
+
+        // Check if the form was submitted and is valid
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Persist the compte to the database
+            $entityManager->persist($compte);
+            $entityManager->flush();
+
+            // Return the response as JSON
+            return $this->json([
+                'id' => $compte->getId(), // Assuming your compte entity has an "id" field
+                'name' => $compte->getConcatenatedLabel() // Assuming your compte entity has a "name" field
+            ]);
+        }
+
+        // If the form is not valid, return an error response
+        return $this->json(['error' => 'Le formulaire n\'est pas valide.'], 400);
+    }
+
+
+
+
 }

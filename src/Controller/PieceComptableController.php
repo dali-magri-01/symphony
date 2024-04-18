@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Compte;
 use App\Entity\PieceComptable;
+use App\Form\CompteType;
 use App\Form\PieceComptableType;
 use App\Repository\JournalRepository;
 use App\Repository\PieceComptableRepository;
@@ -33,8 +35,12 @@ class PieceComptableController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $pieceComptable = new PieceComptable();
+        $compte = new Compte();
         $form = $this->createForm(PieceComptableType::class, $pieceComptable);
         $form->handleRequest($request);
+        $form2 = $this->createForm(CompteType::class, $compte);
+        $form2->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($pieceComptable);
@@ -43,9 +49,11 @@ class PieceComptableController extends AbstractController
             return $this->redirectToRoute('app_piece_comptable_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
         return $this->render('piece_comptable/new.html.twig', [
             'piece_comptable' => $pieceComptable,
             'form' => $form,
+            'formAccount' => $form2,
         ]);
     }
 
@@ -69,6 +77,9 @@ class PieceComptableController extends AbstractController
 
         $form = $this->createForm(PieceComptableType::class, $pieceComptable);
         $form->handleRequest($request);
+        $compte = new Compte();
+        $form2 = $this->createForm(CompteType::class, $compte);
+        $form2->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -79,6 +90,7 @@ class PieceComptableController extends AbstractController
         return $this->render('piece_comptable/edit.html.twig', [
             'piece_comptable' => $pieceComptable,
             'form' => $form,
+            'formAccount' => $form2,
         ]);
     }
 
@@ -225,6 +237,38 @@ class PieceComptableController extends AbstractController
 
         // Retourner le numéro de pièce comptable sous forme de réponse JSON
         return $this->json(['numeroPc' => $pieceNumber]);
+    }
+
+
+    /**
+     * @Route("/popup", name="app_compte_popup", methods={"POST"})
+     */
+    public function popup(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Create a new instance of the Compte entity
+        $compte = new Compte();
+
+        // Create a form for the compte
+        $form = $this->createForm(CompteType::class, $compte);
+
+        // Handle form submission
+        $form->handleRequest($request);
+
+        // Check if the form was submitted and is valid
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Persist the compte to the database
+            $entityManager->persist($compte);
+            $entityManager->flush();
+
+            // Return the response as JSON
+            return $this->json([
+                'id' => $compte->getId(), // Assuming your compte entity has an "id" field
+                'name' => $compte->getConcatenatedLabel() // Assuming your compte entity has a "name" field
+            ]);
+        }
+
+        // If the form is not valid, return an error response
+        return $this->json(['error' => 'Le formulaire n\'est pas valide.'], 400);
     }
 
 

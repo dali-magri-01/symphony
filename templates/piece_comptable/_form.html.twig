@@ -60,7 +60,8 @@
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-10">
+
+                            <div class="col-md-6">
                                 Hide columns:
                                 <label><input type="checkbox" class="toggle-column" data-column="0"> Compte</label>
                                 <label><input type="checkbox" class="toggle-column" data-column="1"> Tier </label>
@@ -69,7 +70,15 @@
                                 <label><input type="checkbox" class="toggle-column" data-column="4"> Libelle</label>
                             </div>
                             <div class="col-md-2">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAccountModal">
+                                    Crée un compte
+                                </button>
+                            </div>
+                            <div class="col-md-2">
                                 <button id="ajouter-ecritures" class="btn btn-primary float-end">Ajouter une écriture</button>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-success px-5">{{ button_label|default('Enregistrer') }}</button>
                             </div>
                         </div><br/>
                         <table id="ecritures" class="table">
@@ -97,23 +106,112 @@
                                 </tr>
                             {% endfor %}
                             </tbody>
+                            <tfoot>
+                            <tr id="">
+                                <th colspan="2"></th>
+                                <th id="">Débit</th>
+                                <th id="">Crédit</th>
+                                <th id="">Balance</th>
+                                <th></th>
+                            </tr>
+                            <tr id="footerRow">
+                                <td colspan="2"></td>
+                                <td id="debitTotal">0</td>
+                                <td id="creditTotal">0</td>
+                                <td id="balance">0</td>
+                                <td></td>
+                            </tr>
+                            </tfoot>
                         </table><br/>
 
                         <div class="row">
                             <div class="col-md-10">
-                               </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-success px-5">{{ button_label|default('Enregistrer') }}</button>
                             </div>
-                        </div><br/>
-
+                            <div class="col-md-2">
+                                <button type="submit" id='buttonsubmit2' class="btn btn-success px-5">{{ button_label|default('Enregistrer') }}</button>
+                            </div>
+                        </div>
+                        <br/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 {{ form_end(form) }}
+<!-- Modal for creating an account -->
+<div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createAccountModalLabel">Create Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(formAccount, {'attr': {'id': 'account_form'}}) }}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-lg-12">
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_code) }}
+                                            {{ form_widget(formAccount.cp_code, {'attr': {'class': 'form-control', 'id': 'cp_code'}}) }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_lib) }}
+                                            {{ form_widget(formAccount.cp_lib, {'attr': {'class': 'form-control','id': 'cp_lib'}}) }}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_type_tiers) }}
+                                            {{ form_widget(formAccount.cp_type_tiers, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_sens) }}
+                                            {{ form_widget(formAccount.cp_sens, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_actif) }}
+                                            {{ form_widget(formAccount.cp_actif, {'attr': {'class': 'form-control'}}) }}
+
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_analytique) }}
+                                            {{ form_widget(formAccount.cp_analytique, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.societe) }}
+                                            {{ form_widget(formAccount.societe, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="mb-3">
+                                            {{ form_label(formAccount.cp_traduction) }}
+                                            {{ form_widget(formAccount.cp_traduction, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(formAccount) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="submitAccountForm">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
 
     {% block javascripts %}
         <script>
@@ -161,6 +259,8 @@
                     var rowToRemove = document.getElementById('ecriture_' + ecritureId);
                     if (rowToRemove) {
                         rowToRemove.remove();
+                        calculateTotals();
+
                     }
                 }
             }
@@ -190,6 +290,27 @@
                     });
             }
 
+            function calculateTotals() {
+                var debitTotal = 0;
+                var creditTotal = 0;
+
+                // Parcourir les lignes du tableau
+                $('#ecritures tbody tr').each(function() {
+                    var montant = parseFloat($(this).find('td:nth-child(3) input').val());
+                    var sens = $(this).find('td:nth-child(4) select').val();
+
+                    // Ajouter le montant à la colonne correspondante
+                    if (sens === 'D') {
+                        debitTotal += montant;
+                    } else if (sens === 'C') {
+                        creditTotal += montant;
+                    }
+                });
+                // Afficher les totaux dans le pied de tableau
+                $('#debitTotal').text(debitTotal.toFixed(2));
+                $('#creditTotal').text(creditTotal.toFixed(2));
+                $('#balance').text((debitTotal - creditTotal).toFixed(2));
+            }
 
 
             document.addEventListener("DOMContentLoaded", function() {
@@ -198,18 +319,22 @@
                 const addButton = document.querySelector("#ajouter-ecritures");
                 $('#datetimepicker-minimum').datetimepicker();
 
+
                 const table = $('#ecritures').DataTable({
                     paging: false,
                     searching: false,
                 });
 
                 var champsCompte = document.querySelectorAll('tbody [name*="compte"]');
+
                 champsCompte.forEach(function(champ, index) {
                     champ.id = "compte_" + index; // Ajout d'un identifiant unique à chaque champ de compte
                     champ.addEventListener('change', function() {
                         ochange(champ.id, 1); // Appel de la fonction onchange avec l'identifiant unique
                     });
                 });
+                const inputFields = document.querySelectorAll('input[type="text"], input[type="number"], select');
+                addEventListenersToInputs(inputFields);
 
                 addButton.addEventListener("click", function() {
                     addEcritureRow(tableBody);
@@ -223,12 +348,14 @@
                     column.visible(!column.visible());
                 });
 
+
                 const form = document.querySelector('#form_piece'); // Sélectionner le formulaire par son ID
 
                 form.addEventListener('submit', async function(event) {
                     event.preventDefault(); // Empêcher la soumission automatique du formulaire
                     const submitButton = document.querySelector('button[type="submit"]'); // Sélectionner le bouton soumettre
-
+                    const submitButton2 = document.getElementById('buttonsubmit2'); // Sélectionner le bouton soumettre par l'ID
+                    submitButton2.disabled = true;
                     const rows = document.querySelectorAll('tbody tr'); // Sélectionner toutes les lignes du tableau
                     submitButton.disabled = true;
 
@@ -236,9 +363,6 @@
                     var idpc = $("#piece_comptable_id").val();
                     var journal = $("#piece_comptable_journal").val();
                     var datepiece = $("#piece_comptable_datepiece").val();
-
-
-
                     let totalDebit = 0;
                     let totalCredit = 0;
 
@@ -254,24 +378,23 @@
                             }
                         }
                     }
-
                     if (totalDebit !== totalCredit) {
                         submitButton.disabled = false;
-
-                        alert("La somme des montants de sens débit ne correspond pas à la somme des montants de sens crédit !");
+                        submitButton2.disabled = false;
+                        alert("Attention PC non équilibré !");
                     } else {
                         if (numeropc !== '') {
                             try {
                                 var verifnpc = await verifnumpc(numeropc, idpc, journal);
                                 if (verifnpc === 1) {
                                     submitButton.disabled = false;
+                                    submitButton2.disabled = false;
 
                                     alert("Le numéro du PC existe.");
                                     return;
                                 }
                                 else{
                                     form.submit(); // Soumettre le formulaire si la vérification de montant réussit
-
                                 }
                             } catch (error) {
                                 console.error('Erreur lors de la vérification du numéro de PC :', error);
@@ -292,19 +415,60 @@
                                 const data = await response.json();
                                 var numeropc = $("#piece_comptable_numero_pc").val(data.numeroPc);
                                 form.submit(); // Soumettre le formulaire si la vérification de montant réussit
-
-
                             } catch (error) {
                                 console.error('Erreur lors de la vérification du numéro de PC :', error);
                                 throw error;
                             }
                         }
-
-
                     }
                 });
 
-                // console.log(tableBody.querySelectorAll("tr").length)
+                // Function to handle submission of the account form via AJAX
+                var urlNewCompte = "{{ path('app_compte_new') }}";
+                document.getElementById('submitAccountForm').addEventListener('click', function() {
+                    const submitButton = document.getElementById('submitAccountForm'); // Sélectionner le bouton soumettre par l'ID
+                    submitButton.disabled = true;
+
+                    // Perform form validation
+                    if (validateForm()) {
+                        // Serialize the form data
+                        const formData = new FormData(document.getElementById('account_form'));
+
+                        // Send an AJAX request to add the account
+                        fetch(urlNewCompte, {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to add account');
+                                }
+                                if (response.status === 200) {
+                                    // Reload the page
+                                    location.reload();
+                                }
+                                // Parse JSON response
+                                return response.json();
+                            })
+                            .then(data => {
+                                // Hide modal
+                                $('#createAccountModal').modal('hide');
+                                location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    } else {
+                        submitButton.disabled = false;
+                    }
+                });
+                calculateTotals();
+
+                // Calculer les totaux à chaque changement dans le tableau
+                $('#ecritures tbody').on('change', 'input, select', function() {
+                    calculateTotals();
+                });
+
                 // Ajouter une ligne si le tableau est vide
                 if (tableBody.querySelectorAll("tr").length==1 || tableBody.querySelectorAll("tr").length<=0 ) {
                     addEcritureRow(tableBody);
@@ -341,6 +505,8 @@
                     deleteButton.innerHTML = '<i class="fas fa-trash"></i> ';
                     deleteButton.addEventListener("click", function() {
                         newRow.remove();
+                        calculateTotals();
+
                     });
 
                     const actionCell = document.createElement("td");
@@ -349,6 +515,9 @@
 
                     // Ajouter la nouvelle ligne à la table
                     tableBody.appendChild(newRow);
+
+                    const newInputs = newRow.querySelectorAll('input[type="text"], input[type="number"], select');
+                    addEventListenersToInputs(newInputs);
                 }
                 async function verifnumpc(numeroPc, idpc, journal) {
                     try {
@@ -376,7 +545,70 @@
                     }
                 }
 
+                // Fonction pour vérifier si tous les champs d'une ligne sont remplis
+                function isRowFilled(row) {
+                    const inputs = row.querySelectorAll(' input[type="number"], select');
+                    for (let input of inputs) {
+                        if (!input.value) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                // Fonction pour ajouter les écouteurs d'événements aux champs d'entrée
+                function addEventListenersToInputs(inputs) {
+                    inputs.forEach(input => {
+                        input.addEventListener('keydown', function(event) {
+                            if (event.key === 'Enter') {
+                                event.preventDefault();
+                                event.stopPropagation();
 
+                                // Trouver la dernière ligne existante dans le tableau
+                                const lastRow = tableBody.querySelector('tr:last-child');
+
+                                // Si aucune ligne n'existe, ajouter une nouvelle ligne
+                                if (!lastRow || isRowFilled(lastRow)) {
+                                    addEcritureRow(tableBody);
+                                }
+                            }
+                        });
+                    });
+                }
+                function calculateTotals() {
+                    var debitTotal = 0;
+                    var creditTotal = 0;
+
+                    // Parcourir les lignes du tableau
+                    $('#ecritures tbody tr').each(function() {
+                        var montant = parseFloat($(this).find('td:nth-child(3) input').val());
+                        var sens = $(this).find('td:nth-child(4) select').val();
+
+                        // Ajouter le montant à la colonne correspondante
+                        if (sens === 'D') {
+                            debitTotal += montant;
+                        } else if (sens === 'C') {
+                            creditTotal += montant;
+                        }
+                    });
+
+                    // Afficher les totaux dans le pied de tableau
+                    $('#debitTotal').text(debitTotal.toFixed(2));
+                    $('#creditTotal').text(creditTotal.toFixed(2));
+                    $('#balance').text((debitTotal - creditTotal).toFixed(2));
+                }
+
+                function validateForm() {
+                    const cpCodeValue = document.getElementById('compte_cp_code').value;
+                    const cpLibValue = document.getElementById('compte_cp_lib').value;
+                    const cp_type_tiers = document.getElementById('compte_cp_type_tiers').value;
+                    const societe = document.getElementById('compte_societe').value;
+                    if (cpCodeValue.trim() === '' || cpLibValue.trim() === '' || cp_type_tiers.trim() === '' || societe.trim() === '') {
+                        // Show error message or handle invalid fields
+                        alert('Veuillez remplir tous les champs.');
+                        return false;
+                    }
+                    return true; // Return true if form is valid
+                }
 
 
                 function ochange(champId, nbsplit) {

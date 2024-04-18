@@ -27,7 +27,7 @@ class EcrituresType extends AbstractType
             ])
             ->add('libelle',null, [
                 'label' => 'Libelle',
-                'required' => True,
+                'required' => false,
             ])
             ->add('sens', ChoiceType::class, [
                 'label' => 'sens',
@@ -39,7 +39,8 @@ class EcrituresType extends AbstractType
                 'attr' => [
                     'class' => 'form-control select2',
                 ],
-                'placeholder' => 'Sens', // Optional placeholder text
+                'placeholder' => 'Choisissez un Sens', // Optional placeholder text
+
             ])
             ->add('montant',null, [
                 'label' => 'Montant',

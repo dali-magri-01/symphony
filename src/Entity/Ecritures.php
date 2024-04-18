@@ -20,11 +20,11 @@ class Ecritures
     #[ORM\ManyToOne(inversedBy: 'ecritures')]
     private ?Tiers $tier = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $libelle = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $sens = null;
+    #[ORM\Column(length: 255, nullable: true, options: ['default' => 'D'])]
+    private ?string $sens =  'D';
 
     #[ORM\Column(nullable: true)]
     private ?float $montant = null;
