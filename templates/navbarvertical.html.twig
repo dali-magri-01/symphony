@@ -1,0 +1,60 @@
+<nav id="sidebar" class="sidebar">
+    <a class="sidebar-brand" href="">
+        <svg>
+            <use xlink:href="#icon-ios-pulse-strong"></use>
+        </svg>
+        {{ societe }}
+    </a>
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <img src="{{ asset('build/images/avatars/avatar-2.png') }}" class="msg-avatar"
+                 alt="user avatar">
+            <div class="fw-bold">Linda Miller</div>
+            <small>Front-end Developer</small>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-item active">
+                <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+                    <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">Dashboards</span>
+                </a>
+                <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+                    <li class="sidebar-item "><a class="sidebar-link" href="dashboard-default.html"></a></li>
+                </ul>
+            </li>
+            {% for menuParent in menusparents %}
+                <li class="sidebar-item">
+                    <a data-bs-target="#{{ menuParent.id }}" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="align-middle me-2 fas fa-fw {{ menuParent.icon }}"></i>
+                        <span class="align-middle">{{ menuParent.name }}</span>
+                    </a>
+                    <ul id="{{ menuParent.id }}" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        {% for menuFils in menusfils %}
+                            {% if menuParent.id == menuFils.parentid.id %}
+                                <li class="sidebar-item {% if currentRoute == menuFils.link %}active{% endif %}">
+                                    <a class="sidebar-link" href="{{ path(menuFils.link) }}"><i class="align-middle me-2 fas fa-fw {{ menuFils.icon }}"></i>{{ menuFils.name }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+
+
+            <li class="sidebar-item">
+                <a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">Comptabilité</span>
+                </a>
+                <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ path ('app_monnaie_index')}}">Monnaie</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ path ('app_devise_index')}}">Devise</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ path ('app_type_tiers_index')}}">Type Tiers</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ path ('app_tiers_index')}}">Tiers</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ path ('app_compte_index')}}">Comptes</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ path ('app_journal_index')}}">Journal</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+

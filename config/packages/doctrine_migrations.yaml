@@ -1,0 +1,16 @@
+doctrine_migrations:
+    migrations_paths:
+        # namespace is arbitrary but should be different from App\Migrations
+        # as migrations classes should NOT be autoloaded
+        'DoctrineMigrations': '%kernel.project_dir%/src/Migrations'
+    enable_profiler: false
+
+    # Possible values: "BY_YEAR", "BY_YEAR_AND_MONTH", false
+    organize_migrations: BY_YEAR
+
+    # Run all migrations in a transaction.
+    all_or_nothing: true
+
+    check_database_platform: true
+
+    em: default

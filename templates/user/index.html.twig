@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeTiers index{% endblock %}
+
+{% block body %}
+<h1>Create new Tiers</h1>
+<div class="header">
+    <h1 class="header-title">
+     Users
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Users</a></li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-xl-2">
+                        </div>
+                        <div class="col-lg-9 col-xl-10">
+                            <form class="float-lg-end">
+                                <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('app_user_new')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Ajouter</a>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('users_data_download')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-PDF'></i>PDF</a>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('export_users')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-PDF'></i>EXCEL</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+{#    <table class="">#}
+       <table id="examplepdf" class="table table-striped " style="width:100%">
+           <thead>
+            <tr>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>IsVerified</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td width="2%">
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="align-middle fas fa-fw fa-pen " style="color: dimgray;"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                </div></div></div></div></div>
+
+{#    <a href="{{ path('app_user_new') }}">Create new</a>#}
+{% endblock %}

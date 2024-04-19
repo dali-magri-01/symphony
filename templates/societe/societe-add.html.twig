@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div class="header">
+    <h1 class="header-title">
+        Sociétes
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Sociéte</a></li>
+        </ol>
+    </nav>
+</div>
+{{ form_start(form)}}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Saisie vos données</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="mb-3">
+                            {{ form_label(form.libelle) }}
+                            {{ form_widget(form.libelle, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.matriculeFiscale) }}
+                            {{ form_widget(form.matriculeFiscale, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.matriculeFiscale, { 'attr': {'class': 'error-message'} }) }}
+
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.rc) }}
+                            {{ form_widget(form.rc, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.devise) }}
+                            {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.pays) }}
+                            {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.rue) }}
+                            {{ form_widget(form.rue, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.ville) }}
+                            {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.codePostal) }}
+                            {{ form_widget(form.codePostal, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.actif) }}
+                            {{ form_widget(form.actif, {
+                                'id': 'flexSwitchCheckDanger',
+                                'attr': {'class': 'form-check-input custom-checkbox', 'role': 'switch'},
+
+                            }) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(form.logoFilename, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <button class="btn btn-success px-4">Enregistrer</button>
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+                </form>
+                {% endblock %}

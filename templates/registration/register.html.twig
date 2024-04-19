@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr" class="semi-dark">
+<head>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="icon" href="{{ asset('build/images/favicon-32x32.png') }}" type="image/png"/>
+        {#        <link href="{{ asset('css/pace.min.css') }}" rel="stylesheet"/>#}
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    {% endblock %}
+</head>
+<body class="bg-login">
+<!--wrapper-->
+<div class="wrapper">
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <div class="d-flex align-items-center justify-content-center my-5">
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                <div class="col mx-auto">
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <div class="p-4">
+                                <div class="mb-3 text-center">
+                                    <img src="assets/images/logo-icon.png" width="60" alt="" />
+                                </div>
+                                <div class="text-center mb-4">
+                                    <h5 class="">Nikon Admin</h5>
+                                    <p class="mb-0">Please fill the below details to create your account</p>
+                                </div>
+                                <div class="form-body">
+                                    {{ form_errors(registrationForm) }}
+
+                                    <div class="row g-3">
+                                        {{ form_start(registrationForm) }}
+                                            <div class="col-12">
+                                                {{ form_row(registrationForm.email) }}
+                                            </div>
+                                            <div class="col-12">
+                                                {{ form_row(registrationForm.plainPassword, {
+                                                    label: 'Password'
+                                                }) }}
+                                            </div>
+                                            <div class="col-12" style="margin-top: var(--bs-gutter-y);">
+                                                <div class="form-check form-switch">
+                                                    {{ form_row(registrationForm.agreeTerms) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-12" style="margin-top: var(--bs-gutter-y);">
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary">Sign up</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" style="margin-top: var(--bs-gutter-y);">
+                                                <div class="text-center ">
+                                                    <p class="mb-0">Already have an account? <a href="login">Sign in here</a></p>
+                                                </div>
+                                            </div>
+                                        {{ form_end(registrationForm) }}
+                                    </div>
+                                </div>
+                                <div class="login-separater text-center mb-5"> <span>OR SIGN UP WITH EMAIL</span>
+                                    <hr/>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+</div>
+<!--end wrapper-->
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {#    <script src="{{ asset('js/pace.min.js') }}"></script>#}
+{% endblock %}
+</body>
+</html>

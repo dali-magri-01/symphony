@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" class="semi-dark">
+<head>
+    <title>{% block title %}Portail{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Modern, flexible and responsive Bootstrap 5 admin &amp; dashboard template">
+    <meta name="author" content="Bootlab">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="icon" href="{{ asset('build/images/favicon-32x32.png') }}" type="image/png"/>
+          {% endblock %}
+</head>
+<body>
+<div class="splash active">
+    <div class="splash-icon"></div>
+</div>
+<div class="wrapper">
+        {# start navbarvertical#} {% include 'navbarvertical.html.twig' %} {#    End navbar #}
+    <div class="main">
+        {# start navbarhorizontal#} {% include 'navbarhorizontal.html.twig' %}  {#    End navbar #}
+        <main class="content">
+            <div class="container-fluid">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+      <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-8 text-start">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a class="text-muted" href="#"></a>
+                            </li>
+
+                            <li class="list-inline-item">
+                                <a class="text-muted" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-4 text-end">
+                        <p class="mb-0">
+                            &copy; 2024 - <a href="dashboard-default.html" class="text-muted">PGSYS</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>

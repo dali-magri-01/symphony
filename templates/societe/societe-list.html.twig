@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tiers{% endblock %}
+
+{% block body %}<h1>Create new Tiers</h1>
+<div class="header">
+    <h1 class="header-title">
+        Societes
+    </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ path ('app_tiers_index')}}">Societes</a></li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-xl-2">
+                        </div>
+                        <div class="col-lg-9 col-xl-10">
+                            <form class="float-lg-end">
+                                <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
+                                    <div class="col">
+                                        <div class="position-relative">
+                                            <a href="{{ path('app_add_societe')}}" class="btn btn-primary mb-3 mb-lg-0"><i class='bx bxs-plus-square'></i>Ajouter</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="tiers" class="table table-striped" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Matricule Fiscale</th>
+                            <th>RC</th>
+                            <th>Pays</th>
+                            <th>Actif</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for societe in societes %}
+                            <tr>
+                                <td>{{societe.libelle}}</td>
+                                <td>{{societe.matriculeFiscale}}</td>
+                                <td>{{societe.rc}}</td>
+                                {% if societe.getPays() is not null %}
+                                    <td>{{ societe.getPays().getNomFrFr() }}</td>
+                                {% else %}
+                                    <td>No country</td>
+                                {% endif %}
+                                <td>{{ societe.actif ? '<div class="badge rounded-pill text-success  "><i class="bx bxs-circle me-1"></i></div>' : '<div class="badge rounded-pill text-warning "><i class="bx bxs-circle align-middle me-1"></i></div>' }}</td>
+                                <td width="2%">
+                                    <a href="{{ path('societe.edit', {'id': societe.id}) }}"><i class="align-middle fas fa-fw fa-pen " style="color: dimgray;"></i></a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                    {% endblock %}
